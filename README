@@ -1,4 +1,4 @@
-Config::ReadAndCheck version 0.02
+Config::ReadAndCheck version 0.03
 ===================
 
 Config::ReadAndCheck - Perl module for parsing generic config files

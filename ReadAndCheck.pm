@@ -27,7 +27,7 @@ $EXPORT_TAGS{'all'}
 @EXPORT = qw(
 );
 
-$VERSION = '0.02';
+$VERSION = '0.03';
 
 use Carp;
 use IO::File;
@@ -356,7 +356,7 @@ sub Parse($$)
 
 	my %Result = ();
 	tie(%Result, 'Tie::IxHash');
-	%Result = &{ParseGetline}($self, $GetLine)
+	%Result = &{$ParseGetline}($self, $GetLine)
 		or return;
 
 	return (wantarray ? %Result : \%Result);
@@ -569,7 +569,7 @@ __END__
 Config::ReadAndCheck - Perl module for parsing generic config files
 conforms to predefined line-by-line-based format.
 
-I<Version 0.02>
+I<Version 0.03>
 
 =head1 SYNOPSIS
 

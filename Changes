@@ -1,5 +1,8 @@
 Revision history for Perl extension Config::ReadAndCheck.
 
+0.03  Mon Mar 10 23:59:59 2003
+	- The 'ParseGetline' syntax bug fixed
+
 0.02  Wed Feb 19 23:00:00 2003
 	- The Process function now can pass error message to the parser.
 	- Licence changed
