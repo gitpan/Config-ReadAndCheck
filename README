@@ -1,4 +1,4 @@
-Config::ReadAndCheck version 0.01
+Config::ReadAndCheck version 0.02
 ===================
 
 Config::ReadAndCheck - Perl module for parsing generic config files
@@ -23,7 +23,8 @@ Tie::IxHash;
 
 COPYRIGHT AND LICENCE
 
-No copyright, no licence. Be patient...
+Copyright: Daniel Podolsky <tpaba@cpan.org>, 2003
+Licence:   Same as perl itself
 
 03 Jul 2002, Daniel Podolsky <tpaba@cpan.org>
 

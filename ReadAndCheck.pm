@@ -18,20 +18,16 @@ require Exporter;
 %EXPORT_TAGS = ('print' => [qw(PrintList)],
                );
 
-my $EKey = undef;
-foreach $EKey (keys(%EXPORT_TAGS))
-	{
-	if ($EKey eq 'all')
-		{ next; };
-	push(@{$EXPORT_TAGS{'all'}}, @{$EXPORT_TAGS{$EKey}});
-	};
+foreach (keys(%EXPORT_TAGS))
+        { push(@{$EXPORT_TAGS{'all'}}, @{$EXPORT_TAGS{$_}}); };
 
-@EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
+$EXPORT_TAGS{'all'}
+	and @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
 
 @EXPORT = qw(
 );
 
-$VERSION = '0.01';
+$VERSION = '0.02';
 
 use Carp;
 use IO::File;
@@ -194,29 +190,16 @@ my $ParseLine = sub($$)
 		my $Pattern = $Params->{$Name}->{'Pattern'};
 
 		my ($P1, $P2);
-		if ($self->{'CaseSens'})
+		($self->{'CaseSens'} ? $Str =~ m/\A$Pattern\Z/ : $Str =~ m/\A$Pattern\Z/i)
+			or next;
+		$@ = '';
+		if (!(($P1, $P2) = &{$Params->{$Name}->{'Process'}}()))
 			{
-			$Str =~ m/\A$Pattern\Z/
-				or next;
-			if (!(($P1, $P2) = &{$Params->{$Name}->{'Process'}}()))
-				{
-				$@ = "Invalid value(s) in '$Name' definition";
-				#if($^W) { Carp::carp $@; };
-				return;
-				};
-			}
-		else
-			{
-			$Str =~ m/\A$Pattern\Z/i
-				or next;
-			if (!(($P1, $P2) = &{$Params->{$Name}->{'Process'}}()))
-				{
-				$@ = "Invalid value(s) in '$Name' definition";
-				#if($^W) { Carp::carp $@; };
-				return;
-				};
+			length($@)
+				or $@ = "Invalid value(s) in '$Name' definition";
+			#if($^W) { Carp::carp $@; };
+			return;
 			};
-
 		return ($Name, $P1, $P2);
 		};
 
@@ -586,7 +569,7 @@ __END__
 Config::ReadAndCheck - Perl module for parsing generic config files
 conforms to predefined line-by-line-based format.
 
-I<Version 0.01>
+I<Version 0.02>
 
 =head1 SYNOPSIS
 
@@ -731,11 +714,18 @@ according to the 'CaseSens' parameter of the C<new()> method.
 The reference to your very own parameter check and preparation
 subroutine. This subroutine which is called without parameters.
 I<C<$1>>, I<C<$2>> and so on will be set according to your pattern.
-I<C<Process>> subroutine has to return one or two elements list. Number and type of elements depends on
+I<C<Process>> subroutine has to return one or two elements list.
+Number and type of elements depends on
 C<$ParamDefinition-E<gt>{'Type'}> and C<$ParamDefinition-E<gt>{'SubSection'}>.
+
 Empty list means the 'line did not pass the check'.
+In this case I<C<Process>> subroutine can pass the error message to the parser:
+just set the I<C<$@>> variable.
+
 If C<$ParamDefinition-E<gt>{'Process'}> is not defined
 the simple I<C<sub{return ($1,$2);}>> subroutine will be used.
+
+I<C<Process>> subroutine can pass the error
 
 =item I<C<'Default'>>
 
