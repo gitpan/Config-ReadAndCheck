@@ -1,0 +1,29 @@
+Config::ReadAndCheck version 0.01
+===================
+
+Config::ReadAndCheck - Perl module for parsing generic config files
+conforms to predefined line-by-line-based format.
+
+INSTALLATION
+
+To install this module type the following:
+
+   perl Makefile.PL
+   make
+   make test
+   make install
+
+DEPENDENCIES
+
+This module requires these other modules:
+
+Carp;
+IO::File;
+Tie::IxHash;
+
+COPYRIGHT AND LICENCE
+
+No copyright, no licence. Be patient...
+
+03 Jul 2002, Daniel Podolsky <tpaba@cpan.org>
+
