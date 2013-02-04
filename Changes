@@ -1,5 +1,8 @@
 Revision history for Perl extension Config::ReadAndCheck.
 
+0.04  Mon Feb 04 21:20 2013
+	- The 'have to be a LIST reference' syntax bug fixed
+
 0.03  Mon Mar 10 23:59:59 2003
 	- The 'ParseGetline' syntax bug fixed
 

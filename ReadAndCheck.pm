@@ -27,7 +27,7 @@ $EXPORT_TAGS{'all'}
 @EXPORT = qw(
 );
 
-$VERSION = '0.03';
+$VERSION = '0.04';
 
 use Carp;
 use IO::File;
@@ -232,9 +232,9 @@ $CheckRequired = sub
 
 			if    ($Params->{$Key}->{'Type'} eq 'LIST')
 				{
-				if (ref($Params->{$Key}->{'Default'}) ne 'LIST')
+				if (ref($Params->{$Key}->{'Default'}) ne 'ARRAY')
 					{
-					$@ = "$Path\->$Key\->{'Default'} have to be an 'LIST' reference";
+					$@ = "$Path\->$Key\->{'Default'} have to be an 'ARRAY' reference";
 					#if($^W) { Carp::carp $@; };
 					return;
 					};
@@ -708,6 +708,7 @@ to the beginning of the pattern and I<C<'\Z'>> will be added to the end automati
 I<C<'\n'>> symbols will be striped out from the line before evaluation.
 The evaluation will be done case sensitive or insensitive
 according to the 'CaseSens' parameter of the C<new()> method.
+
 
 =item I<C<'Process'>>
 
